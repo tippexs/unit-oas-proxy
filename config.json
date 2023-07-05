@@ -1,0 +1,30 @@
+{
+    "listeners": {
+        "*:8765": {
+            "pass": "routes/share"
+        },
+        "*:8080": {
+          "pass": "applications/node-proxy"
+       }
+    },
+    "routes": {
+      "share": [
+        {"action": {"share": "/www/html/$uri"}}
+      ]
+    },
+    "applications": {
+        "node-proxy": {
+            "type": "external",
+            "working_directory": "/www/",
+            "executable": "/usr/bin/env",
+            "arguments": [
+                "node",
+                "--loader",
+                "unit-http/loader.mjs",
+                "--require",
+                "unit-http/loader",
+                "server.js"
+            ]
+        }
+    }
+}
